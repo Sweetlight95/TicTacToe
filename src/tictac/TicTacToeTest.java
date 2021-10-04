@@ -72,7 +72,6 @@ class TicTacToeTest {
     @Test
     void testThatTicTacToeCanDisplayWhenPlayerOnePlays(){
         ticTacToe.play(1);
-        ticTacToe.switchPlayer();
         assertEquals(PLAYER2, ticTacToe.getPlayer());
         //ticTacToe.play(2);
         //ticTacToe.displayArray();
@@ -92,7 +91,6 @@ class TicTacToeTest {
         ticTacToe.play(4);
         ticTacToe.play(5);
         ticTacToe.play(7);
-        ticTacToe.displayArray();
 
         assertEquals(Winner.WON, ticTacToe.getWinner());
     }

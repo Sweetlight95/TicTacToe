@@ -112,19 +112,20 @@ public class TicTacToe {
         }
     }
 
-    public Winner getWinner() {
-       for (int row [] : ticTacToeArray){
-           if (row[0] == row[1] && row[0] == row[2] ){
-               winner = Winner.WON;
-           }
-       }
-       for (int row = 0; row< ticTacToeArray.length; row++){
-           for (int column = 0; column< ticTacToeArray[row].length; column++) {
-               if (ticTacToeArray[row][0] == ticTacToeArray[row][1] && ticTacToeArray[row][2] == ticTacToeArray[row][0]){
-                   winner = Winner.WON;
-               }
-           }
-        }
-
-    }
+//    public Winner getWinner() {
+//       for (int row [] : ticTacToeArray){
+//           if (row[0] == row[1] && row[0] == row[2] ){
+//               System.out.println(row[0] +"" + row[1] +"" +row[2]);
+//               winner = Winner.WON;
+//           }
+//       }
+//       for (int row = 0; row< ticTacToeArray.length; row++){
+//           for (int column = 0; column< ticTacToeArray[row].length; column++) {
+//               if (ticTacToeArray[row][0] == ticTacToeArray[row][1] && ticTacToeArray[row][2] == ticTacToeArray[row][0]){
+//                   winner = Winner.WON;
+//               }
+//           }
+//        }
+//       return winner;
+//    }
 }
