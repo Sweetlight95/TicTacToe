@@ -86,12 +86,17 @@ class TicTacToeTest {
         assertThrows(IllegalArgumentException.class,()->ticTacToe.play(1));
     }
     @Test
-    void testThatWinnerCanBeDetermine() {
+    void testThatWinnerCanBeDeterminedAtRow1() {
         ticTacToe.play(1);
+        ticTacToe.play(2);
         ticTacToe.play(4);
+        ticTacToe.play(5);
         ticTacToe.play(7);
+        ticTacToe.displayArray();
+
         assertEquals(Winner.WON, ticTacToe.getWinner());
     }
+
 
 }
 
