@@ -4,6 +4,7 @@ public class TicTacToe {
     private int[][] ticTacToeArray = new int[3][3];
     private CellValue cellValue = CellValue.EMPTY;
     private Player player = Player.PLAYER1;
+    private Winner winner = Winner.DRAW;
 
     public int[][] getTicTacToeArray() {
         return ticTacToeArray;
@@ -29,13 +30,24 @@ public class TicTacToe {
 
         for(int row = 0; row< ticTacToeArray.length; row++){
             for(int column = 0; column < ticTacToeArray[row].length; column++){
-                if(ticTacToeArray[row][column] != 0){
-                    throw new IllegalArgumentException("Enter another number");
+                if (i >= 1 && i <= 3) {
+                    if (ticTacToeArray[0][i-1] != 0) {
+                        throw new IllegalArgumentException("Enter another number");
+                    }
+                }
+                if (i >= 4 && i <= 6) {
+                    if (ticTacToeArray[1][i%3-1] != 0) {
+                        throw new IllegalArgumentException("Enter another number");
+                    }
+                }
+                if (i >= 7 && i <= 9) {
+                    if (ticTacToeArray[2][i%3-1] != 0) {
+                        throw new IllegalArgumentException("Enter another number");
+                    }
                 }
             }
         }
     }
-
     public void play(int i) {
         validatePlay(i);
         if (player == Player.PLAYER1) {
@@ -97,5 +109,8 @@ public class TicTacToe {
             }
             System.out.println();
         }
+    }
+    public Winner getWinner() {
+        return winner.WON;
     }
 }

@@ -61,8 +61,6 @@ class TicTacToeTest {
         assertSame(Player.PLAYER1, ticTacToe.getPlayer());
     }
 
-
-
     @Test
     void testThatYouCanSwitchPLayers(){
         ticTacToe.switchPlayer();
@@ -86,6 +84,13 @@ class TicTacToeTest {
         ticTacToe.play(1);
         //assert
         assertThrows(IllegalArgumentException.class,()->ticTacToe.play(1));
+    }
+    @Test
+    void testThatWinnerCanBeDetermine() {
+        ticTacToe.play(1);
+        ticTacToe.play(4);
+        ticTacToe.play(7);
+        assertEquals(Winner.WON, ticTacToe.getWinner());
     }
 
 }
