@@ -1,5 +1,5 @@
 package tictac;
 
 public enum Winner {
-    WON, DRAW;
+    WON, DRAW, LOSE ;
 }
