@@ -26,43 +26,49 @@ public class TicTacToe {
         return player;
     }
 
-    public void validatePlay(int i) {
-
+    private void loopThroughRowsInBoard(int i) {
         for (int row = 0; row < board.length; row++) {
-            for (int column = 0; column < board[row].length; column++) {
-                if (i >= 1 && i <= 3) {
-                    if (board[0][(i -1 )% 3] != 0) {
-                        throw new IllegalArgumentException("Enter another number");
-                    }
-                }
-                if (i >= 4 && i <= 6) {
-                    if (board[1][(i -1 )% 3] != 0) {
-                        throw new IllegalArgumentException("Enter another number");
-                    }
-                }
-                if (i >= 7 && i <= 9) {
-                    if (board[2][(i -1 )% 3] != 0) {
-                        throw new IllegalArgumentException("Enter another number");
-                    }
-                }
+            loopThroughColumns(i, board[row]);
+        }
+    }
+
+    private void loopThroughColumns(int index, int[] row) {
+        for (int column = 0; column < row.length; column++) {
+            checkConditions(index);
+        }
+    }
+
+    private void checkConditions(int i) {
+        if (i >= 1 && i <= 3) {
+            if (board[0][(i -1 )% 3] != 0) {
+                throw new IllegalArgumentException("Enter another number");
+            }
+        }
+        if (i >= 4 && i <= 6) {
+            if (board[1][(i -1 )% 3] != 0) {
+                throw new IllegalArgumentException("Enter another number");
+            }
+        }
+        if (i >= 7 && i <= 9) {
+            if (board[2][(i -1 )% 3] != 0) {
+                throw new IllegalArgumentException("Enter another number");
             }
         }
     }
 
+    public void validatePlay(int i) {
+        loopThroughRowsInBoard(i);
+    }
+
     public void play(int i) {
         validatePlay(i);
-        if (player == Player.PLAYER1) {
-            if (i == 1) board[0][0] = 1;
-            if (i == 2) board[0][1] = 1;
-            if (i == 3) board[0][2] = 1;
-            if (i == 4) board[1][0] = 1;
-            if (i == 5) board[1][1] = 1;
-            if (i == 6) board[1][2] = 1;
-            if (i == 7) board[2][0] = 1;
-            if (i == 8) board[2][1] = 1;
-            if (i == 9) board[2][2] = 1;
+        switch(player){
+            case PLAYER1 ->playForPlayerOne(i);
+            case PLAYER2 -> playForPlayerTwo(i);
         }
-        if (player == Player.PLAYER2) {
+    }
+
+    private void playForPlayerTwo(int i) {
             if (i == 1) board[0][0] = 2;
             if (i == 2) board[0][1] = 2;
             if (i == 3) board[0][2] = 2;
@@ -73,9 +79,17 @@ public class TicTacToe {
             if (i == 8) board[2][1] = 2;
             if (i == 9) board[2][2] = 2;
         }
-        displayBoard();
-        switchPlayer();
 
+    private void playForPlayerOne(int i) {
+            if (i == 1) board[0][0] = 1;
+            if (i == 2) board[0][1] = 1;
+            if (i == 3) board[0][2] = 1;
+            if (i == 4) board[1][0] = 1;
+            if (i == 5) board[1][1] = 1;
+            if (i == 6) board[1][2] = 1;
+            if (i == 7) board[2][0] = 1;
+            if (i == 8) board[2][1] = 1;
+            if (i == 9) board[2][2] = 1;
     }
 
     public int[][] getPLayPosition() {
@@ -87,7 +101,6 @@ public class TicTacToe {
             player = Player.PLAYER2;
         } else if (player == Player.PLAYER2) {
             player = Player.PLAYER1;
-
         }
     }
 
@@ -96,31 +109,51 @@ public class TicTacToe {
     }
 
     public void displayBoard() {
-        for (int row = 0; row < board.length; row++) {
-            for (int column = 0; column < board[row].length; column++) {
-                if (board[row][column] == 1) {
-                    System.out.print(" X |");
-                } else if (board[row][column] == 2) {
-                    System.out.print(" O |");
-                } else if (board[row][column] == 0) {
-                    System.out.print("   |");
-                }
+        displayTheRowsAndColumns();
+    }
 
-            }
+    private void displayTheRowsAndColumns() {
+        for (int row = 0; row < board.length; row++) {
+            displayTheColumns(row);
             System.out.println();
         }
     }
 
+    private void displayTheColumns(int row) {
+        for (int column = 0; column < board[row].length; column++) {
+            checkDisplayConditions(row, column);
 
-    public void checkIfPlayerOneIsTheWinner() {
-        if(rowOneIsEqualToOne() == true) winner = Winner.WON;
-        else if(rowTwoIsEqualToOne() ==true) winner = Winner.WON;
-        else if(rowThreeIsEqualToOne() ==true) winner = Winner.WON;
-        else if(columnOneIsEqualToOne() ==true) winner = Winner.WON;
-        else if(columnTwoIsEqualToOne() ==true) winner = Winner.WON;
-        else if(columnThreeIsEqualToOne() ==true) winner = Winner.WON;
-        else if(diagonalOneIsEqualToOne() ==true) winner = Winner.WON;
-        else if(diagonalTwoIsEqualToOne() ==true) winner = Winner.WON;
+        }
+    }
+
+    private void checkDisplayConditions(int row, int column) {
+            if (board[row][column] == 1) {
+                System.out.print(" X |");
+        }
+            if (board[row][column] == 2) {
+                System.out.print(" O |");
+        }
+        else if (board[row][column] == 0) {
+            System.out.print("   |");
+        }
+    }
+
+
+    public Player checkIfPlayerOneIsTheWinner() {
+            checkConditionForPlayerIsWinner();
+            if (winner == Winner.WON)return player;
+            return player;
+    }
+
+    private void checkConditionForPlayerIsWinner() {
+        if (rowOneIsEqualToOne() == true) winner = Winner.WON;
+        else if (rowTwoIsEqualToOne() == true) winner = Winner.WON;
+        else if (rowThreeIsEqualToOne() == true) winner = Winner.WON;
+        else if (columnOneIsEqualToOne() == true) winner = Winner.WON;
+        else if (columnTwoIsEqualToOne() == true) winner = Winner.WON;
+        else if (columnThreeIsEqualToOne() == true) winner = Winner.WON;
+        else if (diagonalOneIsEqualToOne() == true) winner = Winner.WON;
+        else if (diagonalTwoIsEqualToOne() == true) winner = Winner.WON;
     }
 
     private boolean diagonalOneIsEqualToOne() {
@@ -194,16 +227,21 @@ private boolean diagonalTwoIsEqualToOne() {
         return columnIsEqualToOne;
     }
     public void checkIfPlayerTwoIsTheWinner() {
-        if(rowOneIsEqualToOneForPlayer2() == true) winner = Winner.WON;
-        else if(rowTwoIsEqualToOneForPlayer2() ==true) winner = Winner.WON;
-        else if(rowThreeIsEqualToOneForPlayer2() ==true) winner = Winner.WON;
-        else if(columnOneIsEqualToOneForPlayer2() ==true) winner = Winner.WON;
-        else if(columnTwoIsEqualToOneForPlayer2() ==true) winner = Winner.WON;
-        else if(columnThreeIsEqualToOneForPlayer2() ==true) winner = Winner.WON;
-        else if(diagonalOneIsEqualToOne() ==true) winner = Winner.WON;
-        else if(diagonalTwoIsEqualToOne() ==true) winner = Winner.WON;
+        if(player == Player.PLAYER2) {
+            checkConditionForPlayerTwoIsWinner();
+        }
     }
 
+    private void checkConditionForPlayerTwoIsWinner() {
+        if (rowOneIsEqualToOneForPlayer2() == true) winner = Winner.WON;
+        else if (rowTwoIsEqualToOneForPlayer2() == true) winner = Winner.WON;
+        else if (rowThreeIsEqualToOneForPlayer2() == true) winner = Winner.WON;
+        else if (columnOneIsEqualToOneForPlayer2() == true) winner = Winner.WON;
+        else if (columnTwoIsEqualToOneForPlayer2() == true) winner = Winner.WON;
+        else if (columnThreeIsEqualToOneForPlayer2() == true) winner = Winner.WON;
+        else if (diagonalOneIsEqualToOne() == true) winner = Winner.WON;
+        else if (diagonalTwoIsEqualToOne() == true) winner = Winner.WON;
+    }
 
 
     private boolean rowOneIsEqualToOneForPlayer2() {
@@ -267,30 +305,13 @@ private boolean diagonalTwoIsEqualToOne() {
     }
 
     public Player checkWinner() {
-
-        checkIfPlayerOneIsTheWinner();
-        if ( winner == Winner.WON) player = Player.PLAYER1;
-        checkIfPlayerTwoIsTheWinner();
-        if ( winner == Winner.WON) player = Player.PLAYER2;
+        if (winner != Winner.WON){
+            checkIfPlayerOneIsTheWinner();
+            return player;
+        }
+        else{
+            checkIfPlayerTwoIsTheWinner();
+        }
         return player;
     }
-
-
-
-//    public Winner getWinner() {
-//       for (int row [] : ticTacToeArray){
-//           if (row[0] == row[1] && row[0] == row[2] ){
-//               System.out.println(row[0] +"" + row[1] +"" +row[2]);
-//               winner = Winner.WON;
-//           }
-//       }
-//       for (int row = 0; row< ticTacToeArray.length; row++){
-//           for (int column = 0; column< ticTacToeArray[row].length; column++) {
-//               if (ticTacToeArray[row][0] == ticTacToeArray[row][1] && ticTacToeArray[row][2] == ticTacToeArray[row][0]){
-//                   winner = Winner.WON;
-//               }
-//           }
-//        }
-//       return winner;
-//    }
 }

@@ -84,10 +84,15 @@ class TicTacToeTest {
     @Test
     void testThatWinnerCanBeDeterminedAtRow1ForPlayerTwo() {
         ticTacToe.play(5);
+        ticTacToe.switchPlayer();
         ticTacToe.play(1);
+        ticTacToe.switchPlayer();
         ticTacToe.play(4);
+        ticTacToe.switchPlayer();
         ticTacToe.play(2);
+        ticTacToe.switchPlayer();
         ticTacToe.play(7);
+        ticTacToe.switchPlayer();
         ticTacToe.play(3);
         ticTacToe.checkIfPlayerTwoIsTheWinner();
         ticTacToe.displayBoard();

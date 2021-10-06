@@ -6,16 +6,20 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
         TicTacToe ticTacToe = new TicTacToe();
-        Player player1 = ticTacToe.getPlayer();
+        Player player = ticTacToe.getPLayer();
         Winner winner = ticTacToe.getWinner();
 
         while(winner != Winner.WON){
-            System.out.println("Enter number");
+            System.out.println(player + " Enter number");
             int number = scanner.nextInt();
 
             ticTacToe.play(number);
-            System.out.println(ticTacToe.getPlayer());
+            ticTacToe.switchPlayer();
+            ticTacToe
+            ticTacToe.displayBoard();
             ticTacToe.checkWinner();
         }
+
+
     }
 }
